@@ -6,13 +6,14 @@
 var letterGuess;
 var r;
 var g;
-/*var Wins = 0;
-var Loses = 0;
-var Guesses = 9;
-*/
+var win = 0;
+var loses = 0;
+var guesses = 9;
 
 var newLetter;
 var randomchar;
+
+var gameOver = false;
 
 /* Code to bind the key event of entering a key
 */
@@ -25,24 +26,22 @@ var randomchar;
 	
 	
 
-
-		
-	function letterEntry(){
-
-	
-	newLetter = document.getElementById("newLetter").value;
-	
-		console.log("LetterEntry", newLetter);
-		return newLetter;
-	};
-	letterEntry();
+document.onkeyup = function(event) {
+	if (gameOver) { return; }
+	letterGuess = event.key;
+	document.getElementById("newLetter").append(letterGuess);
+	gamePlay();
+	//Check if letter is in word
+		// Is it in the word at all?
+};
 	
 /* Generate a random letter. Using an array of letters in the alphabet*/
 function random_letter() {
-    var letter = "abcdefghijklmnopqurstuvwxyzABCDEFGHIJKLMNOPQURSTUVWXYZ";
-    randomchar = letter.substr( Math.floor(Math.random() * 62), 1);
+    var letter = "abcdefghijklmnopqurstuvwxyz";
+    randomchar = letter.substr(Math.floor(Math.random() * 26), 1);
+    console.log(randomchar);
 
-	console.log("Random Letter", randomchar);
+	//console.log("Random Letter", randomchar);
     return randomchar;
 
 
@@ -50,7 +49,7 @@ function random_letter() {
 random_letter();
 
 
-	console.log( "Guess2", newLetter, "Random", randomchar);
+//console.log( "Guess2", newLetter, "Random", randomchar);
 
 
 
@@ -63,33 +62,22 @@ random_letter();
 
 
 function gamePlay(){
- 
-for (i=0; i < 9; ++i){
- console.log("Return i",i);
-if (randomchar.substr === newLetter.substr)
-    {
-
-	console.log ("G3",newLetter,"R3", randomchar);
-	var Win = 0;
-	
-       document.getElementById("Win").innerHtml= Win + 1;
-        console.log("W1",Win);
-       }
-else
-	{
+	if (randomchar === letterGuess) {
+       	document.getElementById("Win").innerHTML = ++win
+     } else{
+     	document.getElementById("Loses").innerHTML = ++loses;
+	    document.getElementById("Guesses").innerHTML = --guesses;
+	    
+	} 
 		
-		var Loses = 0;
-            document.getElementById("Loses").value = Loses++;
-  			console.log("L1",Loses);
-  		var Guesses = 0;
-	      document.getElementById("Guesses").value=  Guesses;
-	      	console.log("G1",Guesses);
+	//If guesses is more than 9 or they guessed letter
+	if (loses == 9 || guesses == 0) {
+		gameOver = true;
+		alert("Game Over!");
 	}
-	 
+	
 }
 
-};
-gamePlay();
 
 
 
