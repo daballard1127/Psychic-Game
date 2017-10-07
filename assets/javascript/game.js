@@ -27,7 +27,7 @@ var gameOver = false;
 	
 
 document.onkeyup = function(event) {
-	if (gameOver) { return; }
+	if (gameOver || win >0 ){location.reload();}
 	letterGuess = event.key;
 	document.getElementById("newLetter").append(letterGuess);
 	gamePlay();
@@ -73,7 +73,7 @@ function gamePlay(){
 	//If guesses is more than 9 or they guessed letter
 	if (loses == 9 || guesses == 0) {
 		gameOver = true;
-		alert("Game Over!");
+		/*alert("Game Over!");*/
 	}
 	
 }
